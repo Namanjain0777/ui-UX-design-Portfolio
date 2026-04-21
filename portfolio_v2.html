@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Jain — UI/UX Designer & Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #070710;
+  --bg2: #0e0e1a;
+  --bg3: #161624;
+  --card: #0f0f1c;
+  --accent: #7c6fff;
+  --accent2: #ff6b6b;
+  --accent3: #00d9a3;
+  --accent4: #ffb347;
+  --text: #eeeaff;
+  --text2: #8a87aa;
+  --text3: #3d3b55;
+  --border: rgba(124,111,255,0.18);
+  --border2: rgba(255,255,255,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+
+/* CANVAS */
+#hero-canvas{position:absolute;inset:0;z-index:0;pointer-events:none;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(7,7,16,0.75);backdrop-filter:blur(24px);border-bottom:1px solid var(--border2);transition:all 0.3s;}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;color:var(--text);text-decoration:none;letter-spacing:-0.02em;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center;}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:0.85rem;letter-spacing:0.02em;transition:color 0.2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{background:var(--accent)!important;color:#fff!important;padding:0.45rem 1.1rem;border-radius:7px;font-weight:500!important;}
+.nav-cta:hover{background:#6b5ff0!important;}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
+.hero-content{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:8rem 2.5rem 4rem;}
+.hero-chip{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(124,111,255,0.08);border:1px solid rgba(124,111,255,0.25);color:var(--accent);font-size:0.75rem;font-weight:500;padding:0.35rem 0.9rem;border-radius:100px;margin-bottom:2rem;letter-spacing:0.06em;text-transform:uppercase;}
+.chip-dot{width:6px;height:6px;background:var(--accent3);border-radius:50%;animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,6.5vw,5.2rem);font-weight:800;line-height:1.04;letter-spacing:-0.03em;margin-bottom:1.75rem;}
+.hero h1 .hi{color:var(--text2);font-weight:400;font-style:italic;font-family:'DM Sans',sans-serif;font-size:0.45em;display:block;letter-spacing:0;margin-bottom:0.3em;}
+.hero h1 .accent{color:var(--accent);}
+.hero h1 .sub{display:block;color:var(--text2);font-size:0.38em;font-weight:300;font-family:'DM Sans',sans-serif;letter-spacing:0.01em;margin-top:0.6em;line-height:1.6;}
+.hero-desc{max-width:520px;color:var(--text2);font-size:1rem;line-height:1.85;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3.5rem;}
+.btn-p{background:var(--accent);color:#fff;padding:0.8rem 2rem;border-radius:9px;text-decoration:none;font-weight:500;font-size:0.95rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem;}
+.btn-p:hover{background:#6a5eef;transform:translateY(-2px);}
+.btn-s{background:transparent;color:var(--text);padding:0.8rem 2rem;border-radius:9px;text-decoration:none;font-weight:400;font-size:0.95rem;border:1px solid var(--border2);transition:all 0.2s;}
+.btn-s:hover{border-color:var(--accent);color:var(--accent);}
+.hero-stack{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;}
+.stack-label{font-size:0.75rem;color:var(--text3);letter-spacing:0.05em;text-transform:uppercase;}
+.stack-pill{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-size:0.72rem;padding:0.3rem 0.75rem;border-radius:100px;transition:all 0.2s;}
+.stack-pill:hover{border-color:var(--accent);color:var(--accent);}
+
+/* MARQUEE */
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:0.75rem 0;background:var(--bg2);position:relative;z-index:1;}
+.marquee-track{display:flex;gap:3rem;animation:scroll 20s linear infinite;width:max-content;}
+.marquee-item{font-size:0.78rem;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:0.75rem;}
+.marquee-item::after{content:'✦';color:var(--accent);font-size:0.6rem;}
+@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS */
+.container{max-width:1100px;margin:0 auto;padding:0 2.5rem;}
+.sec{padding:6rem 0;position:relative;z-index:1;}
+.sec-tag{font-size:0.72rem;color:var(--accent);font-weight:500;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;display:block;}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;letter-spacing:-0.02em;line-height:1.15;margin-bottom:3rem;}
+.sec-title em{font-style:italic;color:var(--text2);font-family:'DM Sans',sans-serif;font-weight:300;}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--border2);border-radius:16px;border:1px solid var(--border2);overflow:hidden;}
+.sk-card{background:var(--card);padding:1.75rem 1.5rem;transition:background 0.25s;}
+.sk-card:hover{background:var(--bg3);}
+.sk-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1rem;}
+.sk-name{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:600;margin-bottom:0.4rem;color:var(--text);}
+.sk-items{font-size:0.77rem;color:var(--text3);line-height:1.7;}
+
+/* PROJECTS */
+.proj-grid{display:flex;flex-direction:column;gap:2px;background:var(--border2);border-radius:20px;border:1px solid var(--border2);overflow:hidden;}
+.proj-card{background:var(--card);display:grid;grid-template-columns:1fr 1fr;transition:background 0.2s;}
+.proj-card:hover{background:var(--bg3);}
+.proj-card.flip{direction:rtl;}
+.proj-card.flip>*{direction:ltr;}
+.proj-visual{min-height:340px;display:flex;align-items:center;justify-content:center;padding:2rem;background:var(--bg2);position:relative;overflow:hidden;}
+.proj-info{padding:2.75rem;display:flex;flex-direction:column;justify-content:center;}
+.proj-tag{font-size:0.7rem;color:var(--accent);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.6rem;}
+.proj-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.75rem;line-height:1.2;}
+.proj-desc{color:var(--text2);font-size:0.88rem;line-height:1.85;margin-bottom:1.5rem;}
+.tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.5rem;}
+.tag{background:rgba(124,111,255,0.08);border:1px solid rgba(124,111,255,0.15);color:var(--accent);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:100px;}
+.tag.g{background:rgba(0,217,163,0.06);border-color:rgba(0,217,163,0.15);color:var(--accent3);}
+.tag.r{background:rgba(255,107,107,0.06);border-color:rgba(255,107,107,0.15);color:var(--accent2);}
+.tag.y{background:rgba(255,179,71,0.08);border-color:rgba(255,179,71,0.15);color:var(--accent4);}
+.proj-links{display:flex;gap:1rem;}
+.proj-link{color:var(--text2);text-decoration:none;font-size:0.82rem;display:flex;align-items:center;gap:0.3rem;transition:color 0.2s;}
+.proj-link:hover{color:var(--accent);}
+.proj-link svg{width:13px;height:13px;}
+
+/* ---- MOCKUPS ---- */
+/* SmartBudget */
+.sb{width:88%;max-width:360px;background:#12122a;border-radius:14px;border:1px solid rgba(124,111,255,0.2);padding:1.1rem;box-shadow:0 24px 64px rgba(0,0,0,0.6);}
+.sb-bar{display:flex;justify-content:space-between;align-items:center;padding-bottom:0.75rem;border-bottom:1px solid rgba(255,255,255,0.05);margin-bottom:0.9rem;}
+.sb-logo{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:#7c6fff;}
+.sb-av{width:26px;height:26px;border-radius:50%;background:rgba(124,111,255,0.2);display:grid;place-items:center;font-size:0.55rem;color:#7c6fff;font-weight:600;}
+.sb-total{background:rgba(124,111,255,0.07);border-radius:10px;padding:0.8rem 1rem;text-align:center;margin-bottom:0.8rem;}
+.sb-lbl{font-size:0.58rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.05em;}
+.sb-num{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:#fff;}
+.sb-up{font-size:0.58rem;color:#00d9a3;}
+.sb-row{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.8rem;}
+.sb-mini{background:rgba(255,255,255,0.03);border-radius:7px;padding:0.55rem 0.6rem;}
+.sb-ml{font-size:0.52rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.15rem;}
+.sb-mv{font-size:0.9rem;font-weight:600;font-family:'Syne',sans-serif;}
+.sb-bars{display:flex;flex-direction:column;gap:0.35rem;}
+.sb-brow{display:grid;grid-template-columns:80px 1fr 30px;align-items:center;gap:0.5rem;}
+.sb-bname{font-size:0.58rem;color:rgba(255,255,255,0.3);}
+.sb-btrack{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.sb-bfill{height:100%;border-radius:2px;}
+.sb-bpct{font-size:0.55rem;color:rgba(255,255,255,0.25);text-align:right;}
+
+/* AI Network Canvas */
+#ai-canvas{width:100%;height:340px;display:block;}
+
+/* LinkedIn */
+.li-wrap{width:85%;max-width:320px;border-radius:14px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.6);}
+.li-head{background:#0a66c2;padding:0.9rem 1rem;display:flex;align-items:center;gap:0.6rem;}
+.li-av{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.2);display:grid;place-items:center;font-size:0.65rem;color:#fff;font-weight:700;flex-shrink:0;}
+.li-nm{font-size:0.68rem;font-weight:600;color:#fff;}
+.li-role{font-size:0.55rem;color:rgba(255,255,255,0.65);}
+.li-slide{padding:1.1rem;min-height:170px;display:flex;flex-direction:column;justify-content:center;}
+.slide-1{background:linear-gradient(135deg,#1a1a3e,#2d1b69);}
+.slide-2{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);}
+.li-pg{font-size:0.58rem;color:rgba(255,255,255,0.4);margin-bottom:0.4rem;}
+.li-stitle{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:#fff;line-height:1.2;margin-bottom:0.4rem;}
+.li-sbody{font-size:0.65rem;color:rgba(255,255,255,0.7);line-height:1.55;}
+.li-hash{font-size:0.58rem;color:#7c6fff;margin-top:0.5rem;}
+.li-dots{display:flex;gap:4px;justify-content:center;padding:0.45rem;background:#f3f2ef;}
+.li-dot{width:6px;height:6px;border-radius:50%;background:#ccc;}
+.li-dot.on{background:#0a66c2;}
+.li-foot{background:#fff;padding:0.55rem 1rem;display:flex;gap:1.5rem;}
+.li-act{font-size:0.62rem;color:#666;}
+
+/* Three.js orbit viz */
+#threejs-viz{width:100%;height:340px;display:block;border-radius:0;}
+
+/* PROCESS */
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border2);border-radius:16px;border:1px solid var(--border2);overflow:hidden;}
+.proc-step{background:var(--card);padding:2rem 1.5rem;position:relative;transition:background 0.2s;}
+.proc-step:hover{background:var(--bg3);}
+.proc-n{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;color:rgba(124,111,255,0.08);position:absolute;top:0.75rem;right:1rem;line-height:1;}
+.proc-ic{font-size:1.3rem;margin-bottom:1rem;display:block;}
+.proc-t{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:600;margin-bottom:0.4rem;}
+.proc-d{font-size:0.78rem;color:var(--text3);line-height:1.65;}
+
+/* CONTACT */
+.contact-box{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:5rem 3rem;text-align:center;position:relative;overflow:hidden;}
+.contact-box::before{content:'';position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(124,111,255,0.07) 0%,transparent 65%);pointer-events:none;}
+.contact-box h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:0.75rem;}
+.contact-box p{color:var(--text2);margin-bottom:2.5rem;}
+.clinks{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.clink{display:flex;align-items:center;gap:0.5rem;padding:0.7rem 1.3rem;border:1px solid var(--border2);border-radius:9px;color:var(--text2);text-decoration:none;font-size:0.85rem;transition:all 0.2s;}
+.clink:hover{border-color:var(--accent);color:var(--text);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border2);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;color:var(--text3);font-size:0.78rem;position:relative;z-index:1;}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s cubic-bezier(0.16,1,0.3,1),transform 0.65s cubic-bezier(0.16,1,0.3,1);}
+.reveal.show{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:0.1s;}
+.reveal-d2{transition-delay:0.2s;}
+.reveal-d3{transition-delay:0.3s;}
+
+/* CURSOR */
+.cursor{width:10px;height:10px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s,width 0.3s,height 0.3s,opacity 0.3s;}
+.cursor-ring{width:36px;height:36px;border:1px solid rgba(124,111,255,0.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.15s ease;}
+
+@media(max-width:768px){
+  .proj-card,.proj-card.flip{grid-template-columns:1fr;direction:ltr;}
+  .proc-grid{grid-template-columns:1fr 1fr;}
+  .nav-links{display:none;}
+  .contact-box{padding:2.5rem 1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="cur-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">NJ<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-chip"><span class="chip-dot"></span>Open to internship · Apr 2026</div>
+    <h1>
+      <span class="hi">Hi, I'm</span>
+      Naman <span class="accent">Jain</span>
+      <span class="sub">UI/UX Designer · Full-Stack Developer · GenAI Enthusiast</span>
+    </h1>
+    <p class="hero-desc">B.Tech CSE @ NIIT University. I design in Figma, build in code, and think in systems. Focused on crafting AI-driven digital products that are both beautiful and functional.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-p">View my work →</a>
+      <a href="https://github.com/Namanjain0777" target="_blank" class="btn-s">GitHub</a>
+    </div>
+    <div class="hero-stack">
+      <span class="stack-label">Stack ·</span>
+      <span class="stack-pill">Figma</span>
+      <span class="stack-pill">Three.js</span>
+      <span class="stack-pill">Node.js</span>
+      <span class="stack-pill">LangChain</span>
+      <span class="stack-pill">Canva</span>
+      <span class="stack-pill">RAG</span>
+      <span class="stack-pill">DBMS</span>
+      <span class="stack-pill">Java</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="mq">
+    <span class="marquee-item">UI/UX Design</span>
+    <span class="marquee-item">Figma Prototyping</span>
+    <span class="marquee-item">Three.js</span>
+    <span class="marquee-item">GenAI Products</span>
+    <span class="marquee-item">Brand Design</span>
+    <span class="marquee-item">Full-Stack Dev</span>
+    <span class="marquee-item">LangChain</span>
+    <span class="marquee-item">Data Analytics</span>
+    <span class="marquee-item">LinkedIn Marketing</span>
+    <span class="marquee-item">Motion Design</span>
+    <span class="marquee-item">UI/UX Design</span>
+    <span class="marquee-item">Figma Prototyping</span>
+    <span class="marquee-item">Three.js</span>
+    <span class="marquee-item">GenAI Products</span>
+    <span class="marquee-item">Brand Design</span>
+    <span class="marquee-item">Full-Stack Dev</span>
+    <span class="marquee-item">LangChain</span>
+    <span class="marquee-item">Data Analytics</span>
+    <span class="marquee-item">LinkedIn Marketing</span>
+    <span class="marquee-item">Motion Design</span>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section class="sec" id="skills">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-tag">What I bring</span>
+      <h2 class="sec-title">Skills & <em>tools</em></h2>
+    </div>
+    <div class="skills-grid reveal reveal-d1">
+     <div class="sk-card">
+  <div class="sk-icon" style="background:rgba(124,111,255,0.12);color:#7c6fff;">✦</div>
+  <div class="sk-name">UI/UX & Product Design</div>
+  <div class="sk-items">Figma · Wireframes · Prototypes · User Journeys · UX Principles · Visual Hierarchy · Accessibility · Usability</div>
+</div>
+
+<div class="sk-card">
+  <div class="sk-icon" style="background:rgba(0,217,163,0.1);color:#00d9a3;">◈</div>
+  <div class="sk-name">Marketing & Brand Design</div>
+  <div class="sk-items">LinkedIn Posts · Carousels · Infographics · Visual Storytelling · Brand Consistency · Marketing Collateral</div>
+</div>
+
+<div class="sk-card">
+  <div class="sk-icon" style="background:rgba(255,179,71,0.1);color:#ffb347;">⬡</div>
+  <div class="sk-name">Website & Digital Experience</div>
+  <div class="sk-items">Landing Pages · Layout Design · Content Strategy · Responsive Design · Digital User Journeys</div>
+</div>
+
+<div class="sk-card">
+  <div class="sk-icon" style="background:rgba(255,107,107,0.1);color:#ff6b6b;">◎</div>
+  <div class="sk-name">Product Thinking & BA</div>
+  <div class="sk-items">Requirement Analysis · Problem Solving · Information Architecture · User Research · UX Patterns · Business Alignment</div>
+</div>
+
+<div class="sk-card">
+  <div class="sk-icon" style="background:rgba(124,111,255,0.12);color:#7c6fff;">⬟</div>
+  <div class="sk-name">Collaboration & Communication</div>
+  <div class="sk-items">Stakeholder Communication · Design Presentation · Feedback Iteration · Cross-team Collaboration · Brainstorming</div>
+</div>
+
+<div class="sk-card">
+  <div class="sk-icon" style="background:rgba(0,217,163,0.1);color:#00d9a3;">◉</div>
+  <div class="sk-name">Tools & Technologies</div>
+  <div class="sk-items">Figma · Canva · Adobe Tools · AI Tools · Prototyping Tools · Design Systems</div>
+</div>
+
+<div class="sk-card">
+  <div class="sk-icon" style="background:rgba(0,217,163,0.1);color:#00d9a3;">◉</div>
+  <div class="sk-name">Research & Analysis</div>
+  <div class="sk-items">User Research · Industry Trends · Competitive Analysis · Data Interpretation · UX Insights</div>
+</div>
+
+<div class="sk-card">
+  <div class="sk-icon" style="background:rgba(0,217,163,0.1);color:#00d9a3;">◉</div>
+  <div class="sk-name">AI & Product Context</div>
+  <div class="sk-items">GenAI Basics · AI Product Design · Dashboard Design · Data Visualization · AI-driven UX</div>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="sec" id="projects" style="padding-top:0;">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-tag">Selected work</span>
+      <h2 class="sec-title">Projects that <em>ship</em></h2>
+    </div>
+    <div class="proj-grid reveal reveal-d1">
+
+      <!-- P1: SmartBudget -->
+      <div class="proj-card">
+        <div class="proj-visual" style="background:#0b0b1f;">
+          <div class="sb">
+            <div class="sb-bar">
+              <span class="sb-logo">SmartBudget</span>
+              <div class="sb-av">NJ</div>
+            </div>
+            <div class="sb-total">
+              <div class="sb-lbl">Total Balance</div>
+              <div class="sb-num">₹1,24,850</div>
+              <div class="sb-up">↑ +12.4% this month</div>
+            </div>
+            <div class="sb-row">
+              <div class="sb-mini">
+                <div class="sb-ml">Income</div>
+                <div class="sb-mv" style="color:#00d9a3;">₹45,000</div>
+              </div>
+              <div class="sb-mini">
+                <div class="sb-ml">Expenses</div>
+                <div class="sb-mv" style="color:#ff6b6b;">₹18,320</div>
+              </div>
+            </div>
+            <div class="sb-bars">
+              <div class="sb-brow">
+                <div class="sb-bname">Food & Dining</div>
+                <div class="sb-btrack"><div class="sb-bfill" style="width:62%;background:#7c6fff;"></div></div>
+                <div class="sb-bpct">62%</div>
+              </div>
+              <div class="sb-brow">
+                <div class="sb-bname">Transport</div>
+                <div class="sb-btrack"><div class="sb-bfill" style="width:38%;background:#00d9a3;"></div></div>
+                <div class="sb-bpct">38%</div>
+              </div>
+              <div class="sb-brow">
+                <div class="sb-bname">Investments</div>
+                <div class="sb-btrack"><div class="sb-bfill" style="width:24%;background:#ffb347;"></div></div>
+                <div class="sb-bpct">24%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="proj-info">
+          <div class="proj-tag">Full-stack · UI/UX · Product</div>
+          <div class="proj-title">SmartBudget — Finance App</div>
+          <p class="proj-desc">Designed and built end-to-end. Identified user pain points, designed the UI with responsive layouts and clear visual hierarchy, then shipped a full-stack web app with real-time dashboards and JWT auth.</p>
+          <div class="tags">
+            <span class="tag">HTML/CSS/JS</span><span class="tag">Node.js</span><span class="tag">MongoDB</span><span class="tag g">Live</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://smart-budget-khaki.vercel.app" target="_blank" class="proj-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>Live Demo
+            </a>
+            <a href="https://github.com/Namanjain0777/smartBudget" target="_blank" class="proj-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2: AI Network Visualization (Three.js) -->
+      <div class="proj-card flip">
+        <div class="proj-visual" style="background:#060612;padding:0;overflow:hidden;">
+          <canvas id="threejs-viz"></canvas>
+        </div>
+        <div class="proj-info">
+          <div class="proj-tag">Three.js · GenAI · Interactive</div>
+          <div class="proj-title">AI Agent Network — 3D Visualizer</div>
+          <p class="proj-desc">An interactive 3D visualization of multi-agent AI systems built with Three.js. Nodes represent AI agents, edges show data flow. Demonstrates advanced frontend skills with real-time 3D rendering — directly aligned with Nebula9's agentic AI products.</p>
+          <div class="tags">
+            <span class="tag">Three.js</span><span class="tag">JavaScript</span><span class="tag g">GenAI</span><span class="tag y">Interactive</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/Namanjain0777/3D-Al-AGENT-NETWORK-VISUALIZER" target="_blank" class="proj-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>View Code
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3: LinkedIn Carousel -->
+      <div class="proj-card">
+        <div class="proj-visual" style="background:#080814;">
+          <div class="li-wrap">
+            <div class="li-head">
+              <div class="li-av">NJ</div>
+              <div>
+                <div class="li-nm">Naman Jain</div>
+                <div class="li-role">UI/UX Designer · NIIT University</div>
+              </div>
+            </div>
+            <div class="li-slide slide-1" id="liSlide">
+              <div class="li-pg" id="liPg">01 / 05</div>
+              <div class="li-stitle" id="liTitle">What is Agentic AI?</div>
+              <div class="li-sbody" id="liBody">AI that doesn't just answer — it takes actions, makes decisions, and completes multi-step tasks autonomously.</div>
+              <div class="li-hash">#GenAI #AgenticAI #Nebula9</div>
+            </div>
+            <div class="li-dots">
+              <div class="li-dot on" id="d0"></div>
+              <div class="li-dot" id="d1"></div>
+              <div class="li-dot" id="d2"></div>
+              <div class="li-dot" id="d3"></div>
+              <div class="li-dot" id="d4"></div>
+            </div>
+            <div class="li-foot">
+              <span class="li-act">👍 Like</span>
+              <span class="li-act">💬 Comment</span>
+              <span class="li-act" style="cursor:pointer;" onclick="nextSlide()">→ Next</span>
+            </div>
+          </div>
+        </div>
+        <div class="proj-info">
+          <div class="proj-tag">Marketing Design · LinkedIn · Brand</div>
+          <div class="proj-title">GenAI Carousel — Nebula9 Style</div>
+          <p class="proj-desc">A 5-slide interactive LinkedIn carousel explaining Agentic AI — designed in Canva with brand-consistent visual identity. Exactly the type of content Nebula9 creates for brand awareness. Click "Next" to browse slides.</p>
+          <div class="tags">
+            <span class="tag">Canva</span><span class="tag">Brand Design</span><span class="tag g">Marketing</span><span class="tag y">Interactive</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/Namanjain0777/nebula9AI-carousel" target="_blank" class="proj-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec" id="process">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-tag">How I work</span>
+      <h2 class="sec-title">My design <em>process</em></h2>
+    </div>
+    <div class="proc-grid reveal reveal-d1">
+      <div class="proc-step">
+        <span class="proc-n">01</span>
+        <span class="proc-ic">◎</span>
+        <div class="proc-t">Understand</div>
+        <div class="proc-d">Define the problem, map user needs, and set clear goals before touching any design tool.</div>
+      </div>
+      <div class="proc-step">
+        <span class="proc-n">02</span>
+        <span class="proc-ic">⬡</span>
+        <div class="proc-t">Structure</div>
+        <div class="proc-d">Build information architecture, user flows, and content hierarchy — the skeleton before the skin.</div>
+      </div>
+      <div class="proc-step">
+        <span class="proc-n">03</span>
+        <span class="proc-ic">✦</span>
+        <div class="proc-t">Design</div>
+        <div class="proc-d">Wireframes to high-fidelity screens in Figma. Clear visual language, accessible, responsive.</div>
+      </div>
+      <div class="proc-step">
+        <span class="proc-n">04</span>
+        <span class="proc-ic">◈</span>
+        <div class="proc-t">Build & Ship</div>
+        <div class="proc-d">Implement in code — HTML, CSS, JS. The final product matches design intent, pixel-perfect.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="contact">
+  <div class="container">
+    <div class="contact-box reveal">
+      <h2>Let's build<br><span style="color:var(--accent)">something great.</span></h2>
+      <p>Open to UI/UX internships, design collaborations, and dev projects.</p>
+      <div class="clinks">
+        <a href="mailto:Namanjainp01@gmail.com" class="clink">✉ Email</a>
+        <a href="https://www.linkedin.com/in/naman-jain-29b295263/" target="_blank" class="clink">in LinkedIn</a>
+        <a href="https://github.com/Namanjain0777" target="_blank" class="clink">⌥ GitHub</a>
+        <a href="https://namantech.vercel.app/" target="_blank" class="clink">↗ Portfolio</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Naman Jain</span>
+  <span>Designed & built by me ✦</span>
+</footer>
+
+<!-- THREE.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ---- CUSTOM CURSOR ----
+const cur = document.getElementById('cur');
+const curR = document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+function animCursor(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(animCursor);}
+animCursor();
+document.querySelectorAll('a,button,.proj-card,.sk-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';cur.style.opacity='0.5';curR.style.width='52px';curR.style.height='52px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';cur.style.opacity='1';curR.style.width='36px';curR.style.height='36px';});
+});
+
+// ---- HERO THREE.JS (particle field) ----
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+  camera.position.z = 80;
+
+  function resize(){
+    const w=canvas.parentElement.offsetWidth, h=canvas.parentElement.offsetHeight||window.innerHeight;
+    renderer.setSize(w,h);
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  // Particles
+  const N=1800;
+  const geo=new THREE.BufferGeometry();
+  const pos=new Float32Array(N*3);
+  const col=new Float32Array(N*3);
+  const colors=[[0.49,0.44,1],[0,0.85,0.64],[1,0.42,0.42]];
+  for(let i=0;i<N;i++){
+    pos[i*3]=(Math.random()-0.5)*200;
+    pos[i*3+1]=(Math.random()-0.5)*200;
+    pos[i*3+2]=(Math.random()-0.5)*200;
+    const c=colors[Math.floor(Math.random()*colors.length)];
+    col[i*3]=c[0];col[i*3+1]=c[1];col[i*3+2]=c[2];
+  }
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('color',new THREE.BufferAttribute(col,3));
+  const mat=new THREE.PointsMaterial({size:0.7,vertexColors:true,transparent:true,opacity:0.7});
+  scene.add(new THREE.Points(geo,mat));
+
+  // Grid lines
+  const lineMat=new THREE.LineBasicMaterial({color:0x7c6fff,transparent:true,opacity:0.06});
+  for(let i=-5;i<=5;i++){
+    const g1=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(i*20,-100,0),new THREE.Vector3(i*20,100,0)]);
+    const g2=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-100,i*20,0),new THREE.Vector3(100,i*20,0)]);
+    scene.add(new THREE.Line(g1,lineMat));
+    scene.add(new THREE.Line(g2,lineMat));
+  }
+
+  let mx2=0,my2=0;
+  document.addEventListener('mousemove',e=>{mx2=(e.clientX/window.innerWidth-0.5)*2;my2=-(e.clientY/window.innerHeight-0.5)*2;});
+
+  let t=0;
+  function animate(){
+    requestAnimationFrame(animate);
+    t+=0.003;
+    scene.rotation.y=t*0.15+mx2*0.08;
+    scene.rotation.x=t*0.05+my2*0.05;
+    const posArr=geo.attributes.position.array;
+    for(let i=0;i<N;i++){
+      posArr[i*3+1]+=Math.sin(t+i)*0.008;
+    }
+    geo.attributes.position.needsUpdate=true;
+    renderer.render(scene,camera);
+  }
+  animate();
+})();
+
+// ---- AI NETWORK THREE.JS ----
+(function(){
+  const canvas=document.getElementById('threejs-viz');
+  if(!canvas)return;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(55,1,0.1,500);
+  camera.position.set(0,0,35);
+
+  function resize(){
+    const w=canvas.offsetWidth||canvas.parentElement.offsetWidth;
+    const h=canvas.offsetHeight||340;
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  const nodeData=[
+    {label:'Orchestrator',color:0x7c6fff,r:1.4,pos:[0,0,0]},
+    {label:'Research',color:0x00d9a3,r:1,pos:[-10,6,2]},
+    {label:'Analytics',color:0x00d9a3,r:1,pos:[10,6,-2]},
+    {label:'Report',color:0x00d9a3,r:1,pos:[0,-10,3]},
+    {label:'Web Search',color:0xff6b6b,r:0.7,pos:[-16,10,0]},
+    {label:'DB Query',color:0xff6b6b,r:0.7,pos:[-14,2,4]},
+    {label:'NLP Model',color:0xff6b6b,r:0.7,pos:[14,10,-1]},
+    {label:'Trend API',color:0xff6b6b,r:0.7,pos:[12,2,-5]},
+    {label:'PDF Gen',color:0xffb347,r:0.7,pos:[-6,-15,2]},
+    {label:'Slack Bot',color:0xffb347,r:0.7,pos:[6,-15,-2]},
+  ];
+  const edges=[[0,1],[0,2],[0,3],[1,4],[1,5],[2,6],[2,7],[3,8],[3,9]];
+
+  const nodes=[];
+  nodeData.forEach(nd=>{
+    const geo=new THREE.SphereGeometry(nd.r,16,16);
+    const mat=new THREE.MeshBasicMaterial({color:nd.color,transparent:true,opacity:0.85});
+    const mesh=new THREE.Mesh(geo,mat);
+    mesh.position.set(...nd.pos);
+    scene.add(mesh);
+    // glow ring
+    const rGeo=new THREE.RingGeometry(nd.r+0.15,nd.r+0.35,32);
+    const rMat=new THREE.MeshBasicMaterial({color:nd.color,transparent:true,opacity:0.25,side:THREE.DoubleSide});
+    const ring=new THREE.Mesh(rGeo,rMat);
+    ring.position.set(...nd.pos);
+    scene.add(ring);
+    nodes.push(mesh);
+  });
+
+  // edges
+  edges.forEach(([a,b])=>{
+    const pa=nodeData[a].pos, pb=nodeData[b].pos;
+    const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...pa),new THREE.Vector3(...pb)]);
+    const mat=new THREE.LineBasicMaterial({color:0x7c6fff,transparent:true,opacity:0.25});
+    scene.add(new THREE.Line(geo,mat));
+  });
+
+  // flowing particles on edges
+  const flowParticles=[];
+  edges.forEach(([a,b])=>{
+    const geo=new THREE.SphereGeometry(0.18,8,8);
+    const mat=new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.8});
+    const m=new THREE.Mesh(geo,mat);
+    scene.add(m);
+    flowParticles.push({mesh:m,a,b,t:Math.random()});
+  });
+
+  let t=0, autoRot=true;
+  canvas.addEventListener('mouseenter',()=>autoRot=false);
+  canvas.addEventListener('mouseleave',()=>autoRot=true);
+  let lastX=0;
+  canvas.addEventListener('mousemove',e=>{
+    const dx=e.movementX;
+    scene.rotation.y+=dx*0.008;
+    lastX=dx;
+  });
+
+  function animate(){
+    requestAnimationFrame(animate);
+    t+=0.012;
+    if(autoRot) scene.rotation.y+=0.004;
+    scene.rotation.x=Math.sin(t*0.3)*0.15;
+    // pulse nodes
+    nodes.forEach((n,i)=>{
+      const sc=1+Math.sin(t*1.5+i*0.8)*0.06;
+      n.scale.setScalar(sc);
+    });
+    // flow
+    flowParticles.forEach(fp=>{
+      fp.t=(fp.t+0.008)%1;
+      const pa=nodeData[fp.a].pos, pb=nodeData[fp.b].pos;
+      fp.mesh.position.set(
+        pa[0]+(pb[0]-pa[0])*fp.t,
+        pa[1]+(pb[1]-pa[1])*fp.t,
+        pa[2]+(pb[2]-pa[2])*fp.t
+      );
+    });
+    renderer.render(scene,camera);
+  }
+  animate();
+})();
+
+// ---- CAROUSEL ----
+const slides=[
+  {pg:'01 / 05',title:'What is Agentic AI?',body:'AI that takes actions, makes decisions, and completes multi-step tasks — autonomously.',bg:'linear-gradient(135deg,#1a1a3e,#2d1b69)'},
+  {pg:'02 / 05',title:'How agents think',body:'Perceive → Plan → Act → Observe. Each cycle brings the agent closer to completing your goal.',bg:'linear-gradient(135deg,#0f2027,#203a43)'},
+  {pg:'03 / 05',title:'Real-world use cases',body:'Customer support bots, research assistants, code reviewers — all powered by agentic systems.',bg:'linear-gradient(135deg,#1a0a2e,#3d1a6b)'},
+  {pg:'04 / 05',title:'Nebula9\'s approach',body:'Google\'s A2A partner. Building enterprise-ready multi-agent systems that transform businesses.',bg:'linear-gradient(135deg,#0a1a0f,#0d3b1a)'},
+  {pg:'05 / 05',title:'The future is agentic',body:'By 2026, 40% of enterprise AI workloads will be handled by autonomous agents. Are you ready?',bg:'linear-gradient(135deg,#1a0a0a,#3b0d0d)'},
+];
+let curSlide=0;
+function nextSlide(){
+  curSlide=(curSlide+1)%slides.length;
+  const s=slides[curSlide];
+  document.getElementById('liPg').textContent=s.pg;
+  document.getElementById('liTitle').textContent=s.title;
+  document.getElementById('liBody').textContent=s.body;
+  document.getElementById('liSlide').style.background=s.bg;
+  for(let i=0;i<5;i++) document.getElementById('d'+i).className='li-dot'+(i===curSlide?' on':'');
+}
+setInterval(nextSlide,3200);
+
+// ---- SCROLL REVEAL ----
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show');});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
